@@ -4,6 +4,265 @@
              xmlns:local="clr-namespace:MediaCMS"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+
+        <!-- Noto Sans 폰트 리소스 정의 -->
+
+        <FontFamily x:Key="NotoSansFontFamily">/MediaCMS;component/fonts/#Noto Sans KR Regular</FontFamily>
+        <FontFamily x:Key="NotoSansFontMediumFamily">/MediaCMS;component/fonts/#Noto Sans KR Medium</FontFamily>
+        <FontFamily x:Key="NotoSansFontBlackFamily">/MediaCMS;component/fonts/#Noto Sans KR Black</FontFamily>
+        <FontFamily x:Key="NotoSansFontBoldFamily">/MediaCMS;component/fonts/#Noto Sans KR Bold</FontFamily>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource NotoSansFontFamily}"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource NotoSansFontFamily}"/>
+        </Style>
+
+
+
+
+        <Style x:Key="PowerToggleStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border" BorderThickness="0" CornerRadius="5">
+                            <Grid>
+                                <Rectangle x:Name="PART_Track" Width="60" Height="30" RadiusX="15" RadiusY="15"/>
+                                <Ellipse x:Name="PART_Thumb" Width="26" Height="26" Fill="White" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                                <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="PART_Track" Property="Fill" Value="#4CAF50"/>
+                                <Setter TargetName="PART_Thumb" Property="HorizontalAlignment" Value="Right"/>
+                                <Setter TargetName="PART_Thumb" Property="Margin" Value="0,0,2,0"/>
+                                <Setter Property="Content" Value="ON" />
+                                <Setter Property="FontSize" Value="10" />
+                                <Setter TargetName="contentPresenter" Property="HorizontalAlignment" Value="Left"/>
+                                <Setter TargetName="contentPresenter" Property="Margin" Value="20,0,0,0"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="PART_Track" Property="Fill" Value="#E0E0E0"/>
+                                <Setter TargetName="PART_Thumb" Property="HorizontalAlignment" Value="Left"/>
+                                <Setter TargetName="PART_Thumb" Property="Margin" Value="2,0,0,0"/>
+                                <Setter Property="Content" Value="OFF"/>
+                                <Setter Property="FontSize" Value="10" />
+                                <Setter TargetName="contentPresenter" Property="HorizontalAlignment" Value="Right"/>
+                                <Setter TargetName="contentPresenter" Property="Margin" Value="0,0,20,0"/>
+                                <Setter Property="Foreground" Value="Black"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FlatScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Rectangle Fill="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FlatScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Rectangle x:Name="rectangle" Fill="#8D8D8D" RadiusX="8" RadiusY="8"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="rectangle" Property="Fill" Value="#6D6D6D"/>
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="true">
+                                <Setter TargetName="rectangle" Property="Fill" Value="#4D4D4D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FlatHorizontalScrollBarStyle" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="Bg" SnapsToDevicePixels="true" Height="8">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="8"/>
+                            <Track x:Name="PART_Track" IsDirectionReversed="false" IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource FlatScrollBarPageButton}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource FlatScrollBarPageButton}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource FlatScrollBarThumbStyle}"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FlatVerticalScrollBarStyle" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="#D9D9D9"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="Bg" SnapsToDevicePixels="true" Width="8">
+                            <Border Background="Transparent" CornerRadius="8"/>
+                            <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource FlatScrollBarPageButton}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource FlatScrollBarPageButton}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource FlatScrollBarThumbStyle}"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+
+
+
+
+        <Style x:Key="FlatScrollViewerStyle" TargetType="{x:Type ScrollViewer}" >
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}"  Grid.Row="0"/>
+                            <ScrollBar Margin="0,20,5,10" x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Style="{StaticResource FlatVerticalScrollBarStyle}" />
+                            <ScrollBar Margin="20,0,10,5" x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Style="{StaticResource FlatHorizontalScrollBarStyle}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+
+        <Style x:Key="CustomComboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" 
+                                  ClickMode="Press" 
+                                  Focusable="false" 
+                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  Template="{StaticResource ComboBoxToggleButton}"/>
+                            <ContentPresenter x:Name="ContentSite" 
+                                      IsHitTestVisible="False" 
+                                      Content="{TemplateBinding SelectionBoxItem}"
+                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                      Margin="3,3,23,3"
+                                            
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left" 
+                                              />
+                            <TextBox x:Name="PART_EditableTextBox" 
+                                     Style="{x:Null}" 
+                                     HorizontalAlignment="Left" 
+                                     VerticalAlignment="Center" 
+                                    
+                             Margin="3,3,23,3"
+                             Focusable="True" 
+                             Background="Transparent"
+                             Visibility="Hidden"
+                             IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup x:Name="Popup"
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           AllowsTransparency="True" 
+                           Focusable="False"
+                           PopupAnimation="Slide">
+                                <Grid x:Name="DropDown" 
+                              SnapsToDevicePixels="True"               
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="White" BorderThickness="1" BorderBrush="Gray"/>
+                                    <ScrollViewer Style="{StaticResource FlatScrollViewerStyle}" Margin="0" SnapsToDevicePixels="True">
+
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+
+
+
+
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="Border" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="1" Background="White" />
+                <Border Grid.Column="0" Margin="1" Background="White" BorderBrush="Gray" BorderThickness="0" />
+                <Path x:Name="Arrow" Grid.Column="1" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
+            </Grid>
+        </ControlTemplate>
+
+
+
+
+
+
     </Application.Resources>
 </Application>

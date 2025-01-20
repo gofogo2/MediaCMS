@@ -1,0 +1,12 @@
+{
+  "CMSTitle": "SDS SERVER",
+  "ContentsPath": "C:\\GL-MEDIA",
+  "AutoPowerEnabled": false,
+  "Progress_duration": 50.0,
+  "useVNC": true,
+  "useFTP": true,
+  "VNC_Password": "0908",
+  "Status_Check_Interval": 5,
+  "PowerInterval01":5000,
+  "PowerInterval02":5000
+}

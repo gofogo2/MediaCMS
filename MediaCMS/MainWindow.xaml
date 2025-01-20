@@ -3,10 +3,389 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MediaCMS"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        xmlns:local="clr-namespace:MediaCMS" xmlns:usercontrols="clr-namespace:MediaCMS.UserControls"
+          
+        mc:Ignorable="d"  WindowState="Normal" MinWidth="1280" MinHeight="720"
+        Title="CMS" Height="1020" Width="1728"
+        Icon="Images/ic.ico">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+        <BitmapImage x:Key="OnImage" UriSource="pack://application:,,,/Images/pc.png"/>
+        <BitmapImage x:Key="OffImage" UriSource="pack://application:,,,/Images/re.png"/>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Style x:Key="CustomContextMenuStyle" TargetType="{x:Type ContextMenu}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                            <StackPanel IsItemsHost="True" Margin="0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Margin="0"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomMenuItemStyle" TargetType="{x:Type MenuItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border x:Name="Border" Background="Transparent" BorderThickness="0" Padding="5,3" Margin="20,5">
+                            <ContentPresenter Content="{TemplateBinding Header}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#E0E0E0"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+    </Window.Resources>
+
+    <Grid x:Name="MainGrid" Background="#EEEEEE">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Top Controls -->
+        <Grid Grid.Row="0" Margin="15,20,20,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="0,-20,0,0" Foreground="DarkGray" >v 0.18</TextBlock>
+            <StackPanel Orientation="Horizontal" >
+                <Border Grid.Column="0" BorderBrush="DarkGray" BorderThickness="0.0" Padding="5">
+                    <StackPanel Grid.Column="0" Orientation="Vertical" x:Name="sp_auto" >
+                        <!--<TextBlock Text="자동 전원 설정" VerticalAlignment="Center"/>
+                        <TextBlock Text="요일 별 시간 설정" FontSize="10" VerticalAlignment="Center" Margin="0,0,0,0"/>-->
+                        <!--<Image Source="Images/auto_pow.png" MouseLeftButtonDown="Auto_wol_btn_Click" Width="200" Height="69">
+
+                        </Image>-->
+
+                        <Button x:Name="auto_wol_btn"  Width="200" Height="69"  Background="White" Click="Auto_wol_btn_Click">
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="White"  x:Name="BorderElement" BorderBrush="#888888" BorderThickness="1" CornerRadius="5">
+                                        <!-- 둥근 모서리 설정 -->
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="2"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+
+
+
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Images/on_1.png"  Width="40" Height="40"/>
+                                <StackPanel Margin="7,0,0,0">
+                                    <TextBlock Text="자동 전원 설정" FontWeight="Bold" FontSize="17" TextAlignment="Center" Margin="0,0,0,5" FontFamily="{StaticResource NotoSansFontBoldFamily}"/>
+
+                                    <TextBlock Text="요일별 시간 설정" FontSize="15" TextAlignment="Center" FontFamily="{StaticResource NotoSansFontMediumFamily}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+
+
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+
+
+
+
+                <ToggleButton x:Name="AutoPowerToggle" Grid.Column="0" Width="100" Height="50" HorizontalAlignment="Center" Margin="30,0,0,0" Checked="AutoPowerToggle_Checked" Unchecked="AutoPowerToggle_Unchecked" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Grid>
+                                            <!--<Border x:Name="Border" CornerRadius="10" Background="LightGray">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>-->
+                                            <Image Source="Images/pc.png" x:Name="to_img" Width="100" Height="50"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="to_img" Property="Source" Value="Images/t_on.png"/>
+                                                <!--<Setter Property="Source" Value="Images/pc.png"/>-->
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter TargetName="to_img" Property="Source" Value="Images/t_off.png"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+            </StackPanel>
+            <TextBlock Grid.Column="1" FontFamily="{StaticResource NotoSansFontBoldFamily}"  Text="TITLE" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" x:Name="p_title" FontSize="48" />
+            <!--<TextBlock Grid.Column="1" FontFamily="{StaticResource NotoSansFontBoldFamily}" Foreground="Red" Text="v 0.2" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="sdfdsf" FontSize="12"  />-->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!--<Image Source="Images/pow_on.png"   Width="150" Height="69"  MouseLeftButtonDown="TotalPowerBtnOn_Click" />-->
+
+
+
+                <Button  Width="150" Height="69"  Background="#5BB0FE" Click="TotalPowerBtnOn_Click" Margin="20,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"  x:Name="all_on_btn"
+                            BorderBrush="#888888"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                                <!-- 둥근 모서리 설정 -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+
+                                    <Setter TargetName="all_on_btn" Property="BorderThickness" Value="2"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Height="60">
+                        <!--<TextBlock Text="전체 전원"  TextAlignment="Center" FontSize="14" Margin="0,7,0,0" FontFamily="{StaticResource NotoSansFontMediumFamily}"/>
+                        <TextBlock Text="ON" TextAlignment="Center" FontSize="32" Margin="0,-5,0,0" FontFamily="{StaticResource NotoSansFontBlackFamily}"/>-->
+
+
+                        <TextBlock Text="전체 전원"  TextAlignment="Center" FontSize="14" Margin="0,0,0,0" FontFamily="{StaticResource NotoSansFontMediumFamily}"/>
+                        <TextBlock Text="ON" TextAlignment="Center" FontSize="32" Margin="0,0,0,0" FontFamily="{StaticResource NotoSansFontBlackFamily}"/>
+                    </StackPanel>
+                </Button>
+
+
+
+
+
+
+
+
+
+                <Button  Width="150" Height="69"  Background="#D9D9D9" Click="TotalPowerBtnOff_Click" Margin="20,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"  x:Name="all_off_btn"
+                              BorderBrush="#888888"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                                <!-- 둥근 모서리 설정 -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="all_off_btn" Property="BorderThickness" Value="2"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <StackPanel Height="60">
+                        <TextBlock Text="전체 전원" FontWeight="Bold" TextAlignment="Center" FontSize="14" Margin="0,0,0,0"  FontFamily="{StaticResource NotoSansFontMediumFamily}"/>
+                        <TextBlock Text="OFF" FontWeight="Black" TextAlignment="Center" FontSize="32" Margin="0,0,0,0" FontFamily="{StaticResource NotoSansFontBlackFamily}"/>
+                    </StackPanel>
+                </Button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--<Button x:Name="TotalPowerONBtn" Click="">
+                
+                    
+                </Button>-->
+
+                <!--<Image Source="Images/pow_off.png"   Width="150" Height="69"  MouseLeftButtonDown="TotalPowerBtnOff_Click" Margin="20,0,0,0"/>-->
+
+                <!--<Button  x:Name="TotalPowerOFFBtn" >
+                </Button>-->
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Margin="50,10,50,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--<TextBlock Grid.Column="1" Text="기기 관리" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"   />-->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"  Visibility="Collapsed">
+                <Button  Width="80" Height="25" Margin="0,0,10,0" Click="AddDevice_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="+" FontWeight="Bold" Margin="0,0,5,0"/>
+                            <TextBlock Text="장비 추가"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Width="80" Height="25" Click="RemoveDevice_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⊖" FontWeight="Bold" Margin="0,0,5,0"/>
+                            <TextBlock Text="기기 삭제"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" x:Name="editpanel" Visibility="Collapsed">
+                <Button  Width="80" Height="25" Margin="0,0,10,0" Click="item_delete" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock Text="완료"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button  Width="80" Height="25" Click="editpanel_close" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="취소"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+
+
+        </Grid>
+        <!-- Grid and Draggable Items Canvas -->
+        <Border Grid.Row="2" BorderThickness="1" BorderBrush="#999999" Margin="20" CornerRadius="5" Background="White">
+            <ScrollViewer  Style="{StaticResource FlatScrollViewerStyle}"  Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="Transparent">
+                <Grid x:Name="GridContainer" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,0,10">
+                    <Canvas x:Name="GridCanvas" MouseRightButtonDown="tt" MouseLeftButtonDown="Canvas_MouseDown">
+                        <Canvas.ContextMenu>
+                            <ContextMenu Style="{StaticResource CustomContextMenuStyle}">
+                                <!--<ContextMenu>-->
+                                <MenuItem Style="{StaticResource CustomMenuItemStyle}"   Click="add_devi" MouseEnter="MenuButton_MouseEnter" MouseLeave="MenuButton_MouseLeave"  FontFamily="{StaticResource NotoSansFontBoldFamily}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="장비 추가"  FontSize="16" FontFamily="{StaticResource NotoSansFontBoldFamily}" FontWeight="Bold"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <!--<MenuItem Header="기기 삭제" Click="del_devi"/>-->
+
+                            </ContextMenu>
+                        </Canvas.ContextMenu>
+                    </Canvas>
+                    <Canvas x:Name="ItemCanvas" Margin="0,0,0,0"/>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+        <!-- Overlay for FileExplorer -->
+        <Grid x:Name="OverlayGrid" Grid.RowSpan="3" Visibility="Collapsed">
+            <Rectangle Fill="Black" Opacity="0.8"/>
+            <Border x:Name="FileExplorerBorder" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch"  Background="Transparent" CornerRadius="5">
+                <local:FileExplorerControl x:Name="FileExplorerControl" Margin="0,0,0,0"/>
+            </Border>
+        </Grid>
+        <local:AutoPowerSettingsControl x:Name="AutoPowerSettingsControl" Visibility="Collapsed" Grid.RowSpan="3"/>
+        <Grid x:Name="PowerOverlay" Visibility="Collapsed" Grid.RowSpan="3">
+            <Rectangle Fill="Black" Opacity="0.8"/>
+            <!--<Border Background="White" Width="300" Height="150" CornerRadius="10">-->
+            <Grid>
+                <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>-->
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="PowerStatusText" Text="전원 ON" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20" FontSize="20" Foreground="White" FontWeight="Bold" FontFamily="{StaticResource NotoSansFontBoldFamily}"/>
+                    <ProgressBar Foreground="#FFC000" x:Name="PowerProgressBar"  Width="500" Height="50" Minimum="0" Maximum="100" Value="0">
+                        <ProgressBar.Template>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Grid>
+                                    <!-- Track -->
+                                    <Border x:Name="PART_Track"
+                                Background="Transparent"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                                        <Border x:Name="PART_Indicator"  Background="#FFC000"  HorizontalAlignment="Left"  CornerRadius="5">
+                                            <TextBlock Text="{Binding ElementName=PowerProgressBar, Path=Value, StringFormat={}{0:0}%}"  VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Black" FontWeight="Bold" Margin="0,00,30,0" FontSize="20" x:Name="pow_progress_value" FontFamily="{StaticResource NotoSansFontBoldFamily}"/>
+                                        </Border>
+                                    </Border>
+
+
+                                </Grid>
+                            </ControlTemplate>
+                        </ProgressBar.Template>
+                    </ProgressBar>
+                </StackPanel>
+
+            </Grid>
+            <!--</Border>-->
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3" x:Name="add_device_ppanel" Visibility="Collapsed">
+
+
+            <usercontrols:AddDeviceControl x:Name="addDeviceWindow">
+
+            </usercontrols:AddDeviceControl>
+        </Grid>
     </Grid>
+
+
+
 </Window>

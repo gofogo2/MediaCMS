@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="MediaCMS.DraggableItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             FontFamily="/Wpf.FontTest;component/fonts/#Donoun"
+             mc:Ignorable="d" 
+             d:DesignHeight="180" d:DesignWidth="180" Background="White">
+   <UserControl.Resources>
+
+        <Style x:Key="CustomSeparatorStyle" TargetType="{x:Type Separator}">
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Background" Value="#E0E0E0"/>
+        </Style>
+
+        <Style x:Key="CustomContextMenuStyle" TargetType="{x:Type ContextMenu}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                            <StackPanel IsItemsHost="True" Margin="0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Margin="0"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CustomMenuItemStyle" TargetType="{x:Type MenuItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <!--<Border x:Name="Border" Background="Transparent" BorderThickness="0" Padding="5,3" Margin="20,5">-->
+                            <Border x:Name="Border" Background="Transparent" BorderThickness="0" Padding="5,3" Margin="20,5">
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding Header}" VerticalAlignment="Center" HorizontalAlignment="Center"  Height="30"/>
+
+                                <!--<Border Background="Gray" Height="1"  VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,0,0,0" Visibility="Visible"  x:Name="Underline"/>-->
+                                
+                            </Grid>
+                           
+                        </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#E0E0E0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="#888888" CornerRadius="5">
+        <Grid>
+            <Grid x:Name="MainGrid" Width="180" Height="180">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" x:Name="TitleTextBlock" Text="두꺼비Title" FontSize="13" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="5,5,5,0" FontFamily="{StaticResource NotoSansFontMediumFamily}" FontWeight="Medium"/>
+
+                    <Border Grid.Row="1" BorderThickness="1" BorderBrush="#888888" Width="180" Margin="-2,0,0,0">
+                        <Rectangle Fill="#E0E0E0" x:Name="PowerState"/>
+                    </Border>
+
+                    <Image Grid.Row="1" x:Name="IconImage" Width="70" Height="70" Stretch="Uniform" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+
+                    <Image Source="../Images/StatusIndicator.png" x:Name="StatusIndicator" Grid.Row="1"  Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,6,80"  MouseLeftButtonDown="StatusIndicator_MouseLeftButtonDown" Visibility="Collapsed"/>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+
+
+                    <Button  Width="57" Height="30"  Background="#5BB0FE" Click="pow_on">
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"  x:Name="BorderElement"
+                            BorderBrush="#999999"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                                    <!-- 둥근 모서리 설정 -->
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BorderElement" Property="BorderThickness" Value="2"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                        <TextBlock Text="ON" FontWeight="Bold" FontSize="12" FontFamily="{StaticResource NotoSansFontBoldFamily}" />
+                    </Button>
+
+
+
+
+
+
+
+
+                    <Button  Width="57" Height="30"  Background="#D9D9D9" Click="pow_off" Margin="20,0,0,0">
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"  x:Name="BorderElement2"
+                            BorderBrush="#999999"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                                    <!-- 둥근 모서리 설정 -->
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BorderElement2" Property="BorderThickness" Value="2"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                        <TextBlock Text="OFF" FontWeight="Bold" FontSize="12" FontFamily="{StaticResource NotoSansFontBoldFamily}" />
+                    </Button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                        <!--<Button Width="57" Height="30" Margin="0,0,0,0" Click="pow_on" Background="Transparent" BorderThickness="0">
+                            <Image Source="../Images/frame_5.png"/>
+                        </Button>
+                        <Button Width="57" Height="30" Margin="20,0,0,0" Click="pow_off" Background="Transparent" BorderThickness="0">
+                            <Image Source="../Images/frame_6.png"/>
+                        </Button>-->
+                        
+                    </StackPanel>
+
+                    <Grid Grid.Row="1" x:Name="OverlayGrid" Visibility="Collapsed">
+                        <Rectangle Fill="Black" Opacity="0.5"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button Content="VNC" Width="40" Height="30" Margin="0,0,10,0" Click="VNC_Button_Click"/>
+                            <Button Content="FTP" Width="40" Height="30" Margin="0,0,10,0" Click="FTP_Button_Click"/>
+                            <Button Content="X" Width="40" Height="30" Click="Button_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="delete_select" Visibility="Collapsed">
+                <Grid Background="Transparent"/>
+                <ToggleButton Width="120" Height="120" x:Name="d_select">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Source="../Images/blank.png"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Source="../Images/x.png"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

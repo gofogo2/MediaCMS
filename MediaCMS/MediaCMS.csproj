@@ -35,8 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentFTP, Version=52.0.0.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentFTP.52.0.0\lib\net472\FluentFTP.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.9.0.1\lib\net462\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +65,54 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LogViewerWindow.xaml.cs">
+      <DependentUpon>LogViewerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Osc\Extensions.cs" />
+    <Compile Include="Osc\Midi.cs" />
+    <Compile Include="Osc\OscBundle.cs" />
+    <Compile Include="Osc\OscMessage.cs" />
+    <Compile Include="Osc\OscPacket.cs" />
+    <Compile Include="Osc\RGBA.cs" />
+    <Compile Include="Osc\Symbol.cs" />
+    <Compile Include="Osc\Timetag.cs" />
+    <Compile Include="Osc\UDPListener.cs" />
+    <Compile Include="Osc\UDPSender.cs" />
+    <Compile Include="Osc\Utils.cs" />
+    <Compile Include="UserControls\AddDeviceControl.xaml.cs">
+      <DependentUpon>AddDeviceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AutoPowerSettingsControl.xaml.cs">
+      <DependentUpon>AutoPowerSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\confirm_dialog.xaml.cs">
+      <DependentUpon>confirm_dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DaySettingControl.xaml.cs">
+      <DependentUpon>DaySettingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\delete_dialog.xaml.cs">
+      <DependentUpon>delete_dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DraggableItemControl.xaml.cs">
+      <DependentUpon>DraggableItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileExplorerControl.xaml.cs">
+      <DependentUpon>FileExplorerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GlobalMessageControl.xaml.cs">
+      <DependentUpon>GlobalMessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\grid_background.xaml.cs">
+      <DependentUpon>grid_background.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\rename_dialog.xaml.cs">
+      <DependentUpon>rename_dialog.xaml</DependentUpon>
+    </Compile>
+    <Page Include="LogViewerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +121,69 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\DlpProjectorHelper.cs" />
+    <Compile Include="Helpers\DlpProjectorHelper2.cs" />
+    <Compile Include="Helpers\DlpProjectorHelper3.cs" />
+    <Compile Include="Helpers\GlobalMessageService.cs" />
+    <Compile Include="Helpers\KIA360ProtocolHelper.cs" />
+    <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\OSCSenderHelper.cs" />
+    <Compile Include="Helpers\PJLinkHelper.cs" />
+    <Compile Include="Helpers\ProtocolHelper.cs" />
+    <Compile Include="Helpers\ProtocolUdpHelper.cs" />
+    <Compile Include="Helpers\SerialHelper.cs" />
+    <Compile Include="Helpers\TcpHelper.cs" />
+    <Compile Include="Helpers\UdpHelper.cs" />
+    <Compile Include="Helpers\UdpManager.cs" />
+    <Compile Include="Helpers\UdpReceiver.cs" />
+    <Compile Include="Helpers\UdpRelayHelper.cs" />
+    <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Helpers\WakeOnlanHelper.cs" />
+    <Compile Include="Helpers\WebApiHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\AddDeviceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\AutoPowerSettingsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\confirm_dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DaySettingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\delete_dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DraggableItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\FileExplorerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\GlobalMessageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\grid_background.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\rename_dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,13 +203,75 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="fonts\NotoSansKR-Black.ttf" />
+    <Resource Include="fonts\NotoSansKR-Bold.ttf" />
+    <Resource Include="fonts\NotoSansKR-Medium.ttf" />
+    <Resource Include="fonts\NotoSansKR-Regular.ttf" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="sample\itemConfig.json" />
+    <None Include="sample\schedule.json" />
+    <None Include="sample\settings.json" />
+    <None Include="Settings\Setup-IIS-FTP.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Arrow_left.png" />
+    <Resource Include="Images\Arrow_left_basic.png" />
+    <Resource Include="Images\Arrow_right.png" />
+    <Resource Include="Images\Arrow_right_basic.png" />
+    <Resource Include="Images\auto_pow.png" />
+    <Resource Include="Images\blank.png" />
+    <Resource Include="Images\cancel.png" />
+    <Resource Include="Images\confirm.png" />
+    <Resource Include="Images\del.png" />
+    <Resource Include="Images\etc.png" />
+    <Resource Include="Images\frame_5.png" />
+    <Resource Include="Images\frame_6.png" />
+    <Resource Include="Images\ic.ico" />
+    <Resource Include="Images\icons\cmsicon.png" />
+    <Resource Include="Images\icons\icon_bat.png" />
+    <Resource Include="Images\icons\icon_doc.png" />
+    <Resource Include="Images\icons\icon_etc.png" />
+    <Resource Include="Images\icons\icon_exe.png" />
+    <Resource Include="Images\icons\icon_folder.png" />
+    <Resource Include="Images\icons\icon_img.png" />
+    <Resource Include="Images\icons\icon_pdf.png" />
+    <Resource Include="Images\icons\icon_ppt.png" />
+    <Resource Include="Images\icons\icon_sound.png" />
+    <Resource Include="Images\icons\icon_txt.png" />
+    <Resource Include="Images\icons\icon_video.png" />
+    <Resource Include="Images\icons\icon_xls.png" />
+    <Resource Include="Images\icons\icon_zip.PNG" />
+    <Resource Include="Images\label1.png" />
+    <Resource Include="Images\monitor.png" />
+    <Resource Include="Images\new.png" />
+    <Resource Include="Images\off.png" />
+    <Resource Include="Images\on.png" />
+    <Resource Include="Images\on_1.png" />
+    <Resource Include="Images\pc.png" />
+    <Resource Include="Images\PDU.png" />
+    <Resource Include="Images\pow_off.png" />
+    <Resource Include="Images\pow_on.png" />
+    <Resource Include="Images\projector.png" />
+    <Resource Include="Images\re.png" />
+    <Resource Include="Images\receive.png" />
+    <Resource Include="Images\RELAY.png" />
+    <Resource Include="Images\rename.png" />
+    <Resource Include="Images\send.png" />
+    <Resource Include="Images\StatusIndicator.png" />
+    <Resource Include="Images\Tablet.png" />
+    <Resource Include="Images\time.png" />
+    <Resource Include="Images\to_ftp.png" />
+    <Resource Include="Images\to_local.png" />
+    <Resource Include="Images\t_off.png" />
+    <Resource Include="Images\t_on.png" />
+    <Resource Include="Images\x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
