@@ -27,8 +27,13 @@ namespace MediaCMS
         private CancellationTokenSource pingCancellationTokenSource;
         string vncViewerPath = @"C:\Program Files\TightVNC\tvnviewer.exe"; // TightVNC 뷰어 경로
         public ItemConfiguration Configuration { get; private set; }
-        SolidColorBrush onColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ACD7FE"));
-        SolidColorBrush offColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E0E0E0"));
+      
+        
+        //SolidColorBrush onColor = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#ACD7FE"));
+        //SolidColorBrush offColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E0E0E0"));
+           
+        SolidColorBrush onColor = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#FF00F61C"));
+        SolidColorBrush offColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF0000"));
         private int relay_onoff = 0;
         public bool ispow = false;
         private int commonDelay = 1000;
@@ -439,9 +444,12 @@ namespace MediaCMS
             {
                 TitleTextBlock.Text = Configuration.Name;
             }
-
+            DeviceTextBlock.Text = Configuration.DeviceType.ToLower();
+            ipTextBlock.Text = Configuration.IpAddress;
+            chanelTextBlock.Text = Configuration.Channel;
             if (Configuration.DeviceType.ToLower() == "프로젝터(pjlink)")
             {
+                
                 IconImage.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/projector.png"));
             }
             else if (Configuration.DeviceType.ToLower() == "프로젝터(appotronics)")

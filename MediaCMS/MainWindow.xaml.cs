@@ -23,11 +23,30 @@ using OSC_Test.Helpers;
 using System.Text.RegularExpressions;
 using WpfApp11.Helpers;
 using WpfApp11.UserControls;
+using System.Collections.ObjectModel;
 
 namespace MediaCMS
 {
+    //DraggableItemControl
+   
+
     public partial class MainWindow : Window
     {
+
+
+
+
+        public ObservableCollection<DraggableItemControl> MyItems { get; set; }
+        private Point _dragStartPoint;
+
+
+
+
+
+
+
+
+
         public LogViewerWindow logViewer;
         public LogViewerWindow errorlogViewer;
         private List<DraggableItemControl> dragItems = new List<DraggableItemControl>();
@@ -96,11 +115,94 @@ namespace MediaCMS
             return tf;
         }
 
-        public MainWindow()
+
+
+
+
+        //==================================================================================================================
+
+
+        private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _dragStartPoint = e.GetPosition(null);
+        }
+
+        private void ListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point currentPosition = e.GetPosition(null);
+                Vector diff = _dragStartPoint - currentPosition;
+
+                if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+                {
+                    // 드래그 시작
+                    if (sender is ListView listView)
+                    {
+                        var listViewItem = FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+                        if (listViewItem != null)
+                        {
+                            var draggedItem = listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+                            if (draggedItem != null)
+                            {
+                                DragDrop.DoDragDrop(listViewItem, draggedItem, DragDropEffects.Move);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ListView_Drop(object sender, DragEventArgs e)
+        {
+            if (sender is ListView listView && e.Data.GetDataPresent(typeof(string)))
+            {
+                var droppedData = e.Data.GetData(typeof(string)) as string;
+                var target = ((FrameworkElement)e.OriginalSource).DataContext as string;
+
+                if (droppedData != null && target != null && listView.ItemsSource is ObservableCollection<string> items)
+                {
+                    int oldIndex = items.IndexOf(droppedData);
+                    int newIndex = items.IndexOf(target);
+
+                    if (oldIndex != newIndex)
+                    {
+                        items.Move(oldIndex, newIndex);
+                    }
+                }
+            }
+        }
+
+        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            while (current != null)
+            {
+                if (current is T ancestor)
+                {
+                    return ancestor;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            return null;
+        }
+    
+
+
+
+
+
+
+
+
+    //====================================================================================================================
+
+    public MainWindow()
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-
+            MyItems = new ObservableCollection<DraggableItemControl>();
             //if (!checkAuth())
             //{
             //    MessageBox.Show("not allowed");
@@ -918,7 +1020,7 @@ namespace MediaCMS
         }
 
         private const int ItemMargin = 10;
-
+     
         private void CreateDraggableItem(ItemConfiguration config)
         {
             var itemControl = new DraggableItemControl(config)
@@ -945,6 +1047,30 @@ namespace MediaCMS
 
             ItemCanvas.Children.Add(itemControl);
             dragItems.Add(itemControl);
+
+            //MyItems = new ObservableCollection<DraggableItemControl>
+            //MyItems.Add(itemControl);
+
+
+
+
+
+            //MyItems = new ObservableCollection<DraggableItemControl>
+            //{
+            //    new DraggableItemControl(config),
+
+
+            //};
+
+
+
+
+
+            MyItems.Add(new DraggableItemControl(config));
+          
+
+            MyListView.ItemsSource = MyItems;
+
 
             SnapToGrid(itemControl);
         }

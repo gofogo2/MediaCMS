@@ -330,9 +330,21 @@
                     <CheckBox Width="100" Height="100" Content="pdu"></CheckBox>
                 </StackPanel>
             </Grid>
-            
-            
-            <Border Grid.Row="1" BorderThickness="1" BorderBrush="#999999" Margin="10,0,10,10" CornerRadius="5" Background="White">
+
+
+            <ListView Grid.Row="1" x:Name="MyListView"
+                  AllowDrop="True"
+                  PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown"
+                  Drop="ListView_Drop"
+                  MouseMove="ListView_MouseMove">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+
+            <Border Grid.Row="1" BorderThickness="1" BorderBrush="#999999" Margin="10,0,10,10" CornerRadius="5" Background="White" Visibility="Collapsed">
                 <ScrollViewer  Style="{StaticResource FlatScrollViewerStyle}"  Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="Transparent">
                     <Grid x:Name="GridContainer" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,0,10">
                         <Canvas x:Name="GridCanvas" MouseRightButtonDown="tt" MouseLeftButtonDown="Canvas_MouseDown">
