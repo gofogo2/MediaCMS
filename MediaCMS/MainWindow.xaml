@@ -366,6 +366,7 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -374,24 +375,40 @@
                 <StackPanel Orientation="Horizontal">
                     <CheckBox Style="{StaticResource ModernCheckBox}" 
                   Content="PC" 
+                              IsChecked="True"
                   Tag="Images/pc.png"
                   Margin="0,0,20,0"/>
                     <CheckBox Style="{StaticResource ModernCheckBox}" 
-                  Content="프로젝터" 
+                  Content="프로젝터"  IsChecked="True"
                   Tag="Images/projector.png"
                   Margin="0,0,20,0"/>
                     <CheckBox Style="{StaticResource ModernCheckBox}" 
-                  Content="RELAY" 
+                  Content="RELAY"  IsChecked="True"
                   Tag="Images/relay.png"
                   Margin="0,0,20,0"/>
                     <CheckBox Style="{StaticResource ModernCheckBox}" 
-                  Content="PDU" 
+                  Content="PDU"  IsChecked="True"
                   Tag="Images/pdu.png"/>
                 </StackPanel>
             </Grid>
 
+
+            <Grid Margin="30,20,30,20" Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Style="{StaticResource ModernCheckBox}" Width="50" Height="50"
+                  Content="PC" 
+                              IsChecked="False"
+                  Tag="Images/pc.png"
+                  Margin="0,0,20,0"/>
+
+                    
+                </StackPanel>
+                <Button Width="100" HorizontalAlignment="Right"/>
+                <Button Width="100" HorizontalAlignment="Right" Margin="0,0,150,0"/>
+            </Grid>
+
             <!-- 리스트뷰 영역 -->
-            <ListView Grid.Row="1" 
+            <ListView Grid.Row="2" 
                       x:Name="MyListView"
                       Margin="30,0,30,30"
                       Background="Transparent"
