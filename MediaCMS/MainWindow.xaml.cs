@@ -989,34 +989,34 @@ namespace MediaCMS
 
         private void CreateGrid()
         {
-            GridContainer.Width = GridColumns * GridCellWidth;
-            GridContainer.Height = GridRows * GridCellHeight;
+            //GridContainer.Width = GridColumns * GridCellWidth;
+            //GridContainer.Height = GridRows * GridCellHeight;
 
-            for (int i = 0; i < GridRows; i++)
-            {
-                for (int j = 0; j < GridColumns; j++)
-                {
-                    Rectangle cell = new Rectangle
-                    {
-                        //Width = GridCellWidth,
-                        //Height = GridCellHeight,
-                        Width = 200,
-                        Height = 200,
-                        Stroke = Brushes.White,
-                        StrokeThickness = 1
+            //for (int i = 0; i < GridRows; i++)
+            //{
+            //    for (int j = 0; j < GridColumns; j++)
+            //    {
+            //        Rectangle cell = new Rectangle
+            //        {
+            //            //Width = GridCellWidth,
+            //            //Height = GridCellHeight,
+            //            Width = 200,
+            //            Height = 200,
+            //            Stroke = Brushes.White,
+            //            StrokeThickness = 1
 
-                    };
-                    Canvas.SetLeft(cell, j * GridCellWidth);
-                    Canvas.SetTop(cell, i * GridCellHeight);
+            //        };
+            //        Canvas.SetLeft(cell, j * GridCellWidth);
+            //        Canvas.SetTop(cell, i * GridCellHeight);
 
-                    var gs = new grid_background();
-                    var vb = new VisualBrush();
-                    vb.Visual = gs;
-                    cell.Fill = vb;
+            //        var gs = new grid_background();
+            //        var vb = new VisualBrush();
+            //        vb.Visual = gs;
+            //        cell.Fill = vb;
 
-                    GridCanvas.Children.Add(cell);
-                }
-            }
+            //        GridCanvas.Children.Add(cell);
+            //    }
+            //}
         }
 
         private const int ItemMargin = 10;
@@ -1045,22 +1045,10 @@ namespace MediaCMS
 
             highestZIndex = Math.Max(highestZIndex, config.ZIndex);
 
-            ItemCanvas.Children.Add(itemControl);
+            //ItemCanvas.Children.Add(itemControl);  //기존 영역
             dragItems.Add(itemControl);
 
-            //MyItems = new ObservableCollection<DraggableItemControl>
-            //MyItems.Add(itemControl);
-
-
-
-
-
-            //MyItems = new ObservableCollection<DraggableItemControl>
-            //{
-            //    new DraggableItemControl(config),
-
-
-            //};
+          
 
 
 
@@ -1201,9 +1189,9 @@ namespace MediaCMS
         {
             if (draggedItem != null)
             {
-                Point currentPos = e.GetPosition(ItemCanvas);
-                Canvas.SetLeft(draggedItem, currentPos.X - offset.X);
-                Canvas.SetTop(draggedItem, currentPos.Y - offset.Y);
+                //Point currentPos = e.GetPosition(ItemCanvas); //기존 영역
+                //Canvas.SetLeft(draggedItem, currentPos.X - offset.X);
+                //Canvas.SetTop(draggedItem, currentPos.Y - offset.Y);
             }
         }
 
@@ -1300,7 +1288,7 @@ namespace MediaCMS
         {
             if (File.Exists(ConfigFile))
             {
-                ItemCanvas.Children.Clear();
+                //ItemCanvas.Children.Clear();  //기존 영역
                 dragItems.Clear();
                 string jsonString = File.ReadAllText(ConfigFile);
                 List<ItemConfiguration> configurations = JsonConvert.DeserializeObject<List<ItemConfiguration>>(jsonString);
@@ -1463,9 +1451,10 @@ namespace MediaCMS
         private void RemoveDevice_Click(object sender, RoutedEventArgs e)
         {
             editpanel.Visibility = Visibility.Visible;
-            for (int i = 0; i < dragItems.Count; i++)
+            delete_menu_area.Visibility = Visibility.Visible;
+            for (int i = 0; i < MyItems.Count; i++)
             {
-                dragItems[i].delete_select.Visibility = Visibility.Visible;
+                MyItems[i].delete_select.Visibility = Visibility.Visible;
             }
         }
 
@@ -1484,7 +1473,7 @@ namespace MediaCMS
                 {
                     if (dragItems[i].d_select.IsChecked == true)
                     {
-                        ItemCanvas.Children.Remove(dragItems[i]);
+                        //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
                         dragItems.RemoveAt(i);
                     }
                 }
@@ -1492,10 +1481,10 @@ namespace MediaCMS
                 SaveItemConfigurations();
 
                 editpanel.Visibility = Visibility.Collapsed;
-                for (int i = 0; i < dragItems.Count; i++)
+                for (int i = 0; i < MyItems.Count; i++)
                 {
-                    dragItems[i].delete_select.Visibility = Visibility.Collapsed;
-                    dragItems[i].d_select.IsChecked = false;
+                    MyItems[i].delete_select.Visibility = Visibility.Collapsed;
+                    MyItems[i].d_select.IsChecked = false;
                 }
             }
         }
@@ -1503,11 +1492,33 @@ namespace MediaCMS
         private void editpanel_close(object sender, RoutedEventArgs e)
         {
             editpanel.Visibility = Visibility.Collapsed;
-            for (int i = 0; i < dragItems.Count; i++)
+            delete_menu_area.Visibility = Visibility.Collapsed;
+            for (int i = 0; i < MyItems.Count; i++)
             {
-                dragItems[i].delete_select.Visibility = Visibility.Collapsed;
+                MyItems[i].delete_select.Visibility = Visibility.Collapsed;
+                MyItems[i].d_select.IsChecked = false;
             }
         }
+
+        private void delete_total_click(object sender, RoutedEventArgs e)
+        {
+            if (delete_total_toggle.IsChecked == true)
+            {
+                for (int i = 0; i < MyItems.Count; i++)
+                {
+                    MyItems[i].d_select.IsChecked = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < MyItems.Count; i++)
+                {
+                    MyItems[i].d_select.IsChecked = false;
+                }
+            }
+        }
+
+
 
         private void AutoPowerSettings_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1557,7 +1568,7 @@ namespace MediaCMS
 
         public void RemoveDevice(DraggableItemControl deviceControl)
         {
-            ItemCanvas.Children.Remove(deviceControl);
+            //ItemCanvas.Children.Remove(deviceControl); //기존 영역
             dragItems.Remove(deviceControl);
             SaveItemConfigurations();
 

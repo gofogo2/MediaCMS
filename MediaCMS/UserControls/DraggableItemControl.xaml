@@ -172,8 +172,8 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <Grid x:Name="delete_select" Visibility="Visible" Width="50" HorizontalAlignment="Left">
-                <Grid Background="Transparent"/>
+                <Grid x:Name="delete_select" Visibility="Collapsed" Width="50" HorizontalAlignment="Left">
+                
                 <ToggleButton Width="40" Height="40" x:Name="d_select" HorizontalAlignment="Left" Margin="10,0,0,0">
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">

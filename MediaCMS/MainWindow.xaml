@@ -393,18 +393,31 @@
             </Grid>
 
 
-            <Grid Margin="30,20,30,20" Grid.Row="1">
+            <Grid Margin="30,20,30,20" Grid.Row="1" Visibility="Collapsed" x:Name="delete_menu_area">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Style="{StaticResource ModernCheckBox}" Width="50" Height="50"
-                  Content="PC" 
-                              IsChecked="False"
+                    <CheckBox Style="{StaticResource ModernCheckBox}" Width="50" Height="50" x:Name="delete_total_toggle" Content="PC"  Checked="delete_total_click" IsChecked="False" Unchecked="delete_total_click"
                   Tag="Images/pc.png"
                   Margin="0,0,20,0"/>
 
                     
                 </StackPanel>
-                <Button Width="100" HorizontalAlignment="Right"/>
-                <Button Width="100" HorizontalAlignment="Right" Margin="0,0,150,0"/>
+                <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Right"  x:Name="editpanel"  Visibility="Visible" Margin="0,0,30,0">
+                    <Button Width="80" 
+            Height="40" 
+            Margin="0,0,10,0" 
+            Style="{StaticResource ModernActionButton}"
+            Click="item_delete">
+                        <TextBlock Text="선택 삭제"/>
+                    </Button>
+                    <Button Width="80" 
+            Height="40" 
+            Style="{StaticResource ModernActionButton}"
+            Click="editpanel_close">
+                        <TextBlock Text="취소"/>
+                    </Button>
+                </StackPanel>
+
+            
             </Grid>
 
             <!-- 리스트뷰 영역 -->
@@ -431,7 +444,7 @@
             </ListView>
 
             <!-- 기존 Canvas영역 (숨김 상태) -->
-            <Border Grid.Row="1" 
+            <!--<Border Grid.Row="1" 
                     BorderThickness="1" 
                     BorderBrush="#E0E0E0" 
                     Margin="30,0,30,30" 
@@ -468,7 +481,7 @@
                         <Canvas x:Name="ItemCanvas"/>
                     </Grid>
                 </ScrollViewer>
-            </Border>
+            </Border>-->
         </Grid>
 
         <!-- 오버레이 영역들 -->
@@ -540,26 +553,7 @@
             </StackPanel>
         </Grid>
         <!-- editpanel 추가 -->
-        <StackPanel Grid.Column="1" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Right" 
-            x:Name="editpanel" 
-            Visibility="Collapsed"
-            Margin="0,20,30,0">
-            <Button Width="80" 
-            Height="40" 
-            Margin="0,0,10,0" 
-            Style="{StaticResource ModernActionButton}"
-            Click="item_delete">
-                <TextBlock Text="완료"/>
-            </Button>
-            <Button Width="80" 
-            Height="40" 
-            Style="{StaticResource ModernActionButton}"
-            Click="editpanel_close">
-                <TextBlock Text="취소"/>
-            </Button>
-        </StackPanel>
+    
 
         <!-- 장비 추가 패널 -->
         <Grid Grid.ColumnSpan="2" 
