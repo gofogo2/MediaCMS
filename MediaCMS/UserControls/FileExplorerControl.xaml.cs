@@ -328,6 +328,7 @@ namespace MediaCMS
                 Uri ftpUri = new Uri(target_ftp);
                 string host = ftpUri.Host;
                 string username = "ftpuser";
+                //string username = "ftp1234";
                 string password = "1";
                 _ftpClient = new FtpClient(host, username, password);
                 ////====================================================================

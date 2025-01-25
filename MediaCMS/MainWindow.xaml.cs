@@ -24,6 +24,8 @@ using System.Text.RegularExpressions;
 using WpfApp11.Helpers;
 using WpfApp11.UserControls;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace MediaCMS
 {
@@ -37,6 +39,7 @@ namespace MediaCMS
 
 
         public ObservableCollection<DraggableItemControl> MyItems { get; set; }
+        private ICollectionView _collectionView;
         private Point _dragStartPoint;
 
 
@@ -203,6 +206,9 @@ namespace MediaCMS
             InitializeComponent();
             Loaded += MainWindow_Loaded;
             MyItems = new ObservableCollection<DraggableItemControl>();
+
+            _collectionView = CollectionViewSource.GetDefaultView(MyItems);
+            _collectionView.Filter = item => ((DraggableItemControl)item).Visibility == Visibility.Visible;
             //if (!checkAuth())
             //{
             //    MessageBox.Show("not allowed");
@@ -1429,6 +1435,21 @@ namespace MediaCMS
             addDeviceWindow.editbtn.Visibility = Visibility.Collapsed;
             addDeviceWindow.title.Text = "장비 등록";
             addDeviceWindow.DeviceTypeComboBox.IsEnabled = true;
+
+
+
+
+            editpanel.Visibility = Visibility.Collapsed;
+            delete_menu_area.Visibility = Visibility.Collapsed;
+            for (int i = 0; i < MyItems.Count; i++)
+            {
+                MyItems[i].delete_select.Visibility = Visibility.Collapsed;
+                MyItems[i].d_select.IsChecked = false;
+            }
+
+
+
+
         }
 
 
@@ -1452,6 +1473,7 @@ namespace MediaCMS
 
         private void RemoveDevice_Click(object sender, RoutedEventArgs e)
         {
+
             editpanel.Visibility = Visibility.Visible;
             delete_menu_area.Visibility = Visibility.Visible;
             for (int i = 0; i < MyItems.Count; i++)
@@ -1469,6 +1491,7 @@ namespace MediaCMS
                 {
                     if (MyItems.Count != 0)
                     {
+
                         for (int i = MyItems.Count - 1; i >= 0; i--)
                         {
                             if (MyItems[i].Configuration.DeviceType.ToLower() == "pc")
@@ -1479,6 +1502,8 @@ namespace MediaCMS
 
                             }
                         }
+                        _collectionView.Refresh();
+
                     }
                 }
                 else
@@ -1495,12 +1520,155 @@ namespace MediaCMS
 
                             }
                         }
+
+                        _collectionView.Refresh();
+
                     }
                 }
                 
             }
-            
-            
+
+         
+
+
+        }
+
+
+
+        private void category_projecter_check(object sender, RoutedEventArgs e)
+        {
+            if (MyItems != null)
+            {
+
+                if (category_projecter.IsChecked == true)
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "프로젝터(pjlink)")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Visible;
+
+                            }
+                        }
+
+                        _collectionView.Refresh();
+
+                    }
+                }
+                else
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "프로젝터(pjlink)")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Collapsed;
+
+                            }
+                        }
+
+                        _collectionView.Refresh();
+
+                    }
+                }
+
+            }
+
+
+        }
+
+
+
+        private void category_relay_check(object sender, RoutedEventArgs e)
+        {
+            if (MyItems != null)
+            {
+
+                if (category_relay.IsChecked == true)
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "relay")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Visible;
+                            }
+                        }
+                        _collectionView.Refresh();
+                    }
+                }
+                else
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "relay")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Collapsed;
+                            }
+                        }
+                        _collectionView.Refresh();
+
+                    }
+                }
+
+            }
+        }
+
+
+        private void category_pdu_check(object sender, RoutedEventArgs e)
+        {
+            if (MyItems != null)
+            {
+
+                if (category_pdu.IsChecked == true)
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "pdu")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Visible;
+                            }
+                        }
+                        _collectionView.Refresh();
+                    }
+                }
+                else
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "pdu")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Collapsed;
+                            }
+                        }
+                        _collectionView.Refresh();
+
+                    }
+                }
+
+            }
         }
 
 
@@ -1559,20 +1727,28 @@ namespace MediaCMS
             }
         }
 
+
+        public bool temp_total_stop = false;
+
         private void delete_total_click(object sender, RoutedEventArgs e)
         {
-            if (delete_total_toggle.IsChecked == true)
+
+            if (temp_total_stop == false)
             {
-                for (int i = 0; i < MyItems.Count; i++)
+
+                if (delete_total_toggle.IsChecked == true)
                 {
-                    MyItems[i].d_select.IsChecked = true;
+                    for (int i = 0; i < MyItems.Count; i++)
+                    {
+                        MyItems[i].d_select.IsChecked = true;
+                    }
                 }
-            }
-            else
-            {
-                for (int i = 0; i < MyItems.Count; i++)
+                else
                 {
-                    MyItems[i].d_select.IsChecked = false;
+                    for (int i = 0; i < MyItems.Count; i++)
+                    {
+                        MyItems[i].d_select.IsChecked = false;
+                    }
                 }
             }
         }

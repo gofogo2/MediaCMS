@@ -495,6 +495,7 @@ namespace MediaCMS
                 else
                 {
                     MessageBox.Show("전원이 꺼져있습니다.");
+                    //mainWindow.ShowFileExplorer(Configuration.IpAddress, Configuration.Name);
                 }
             }
             OverlayGrid.Visibility = Visibility.Collapsed;
@@ -543,6 +544,21 @@ namespace MediaCMS
             mainWindow.add_device_ppanel.Visibility = Visibility.Visible;
             mainWindow.addDeviceWindow.set_edit_value(Configuration);
         }
+
+
+        private void d_select_unchecked(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Window.GetWindow(this) as MainWindow;
+
+            mainWindow.temp_total_stop = true;
+
+            mainWindow.delete_total_toggle.IsChecked = false;
+
+            mainWindow.temp_total_stop = false;
+        }
+
+
+
 
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
         {

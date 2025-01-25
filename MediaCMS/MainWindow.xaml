@@ -378,15 +378,15 @@
                               IsChecked="True"
                   Tag="Images/pc.png"
                   Margin="0,0,20,0"/>
-                    <CheckBox Style="{StaticResource ModernCheckBox}" 
+                    <CheckBox Style="{StaticResource ModernCheckBox}" Checked="category_projecter_check" Unchecked="category_projecter_check" x:Name="category_projecter"
                   Content="프로젝터"  IsChecked="True"
                   Tag="Images/projector.png"
                   Margin="0,0,20,0"/>
-                    <CheckBox Style="{StaticResource ModernCheckBox}" 
+                    <CheckBox Style="{StaticResource ModernCheckBox}" Checked="category_relay_check" Unchecked="category_relay_check" x:Name="category_relay"
                   Content="RELAY"  IsChecked="True"
                   Tag="Images/relay.png"
                   Margin="0,0,20,0"/>
-                    <CheckBox Style="{StaticResource ModernCheckBox}" 
+                    <CheckBox Style="{StaticResource ModernCheckBox}" Checked="category_pdu_check" Unchecked="category_pdu_check" x:Name="category_pdu"
                   Content="PDU"  IsChecked="True"
                   Tag="Images/pdu.png"/>
                 </StackPanel>
@@ -395,11 +395,37 @@
 
             <Grid Margin="30,20,30,20" Grid.Row="1" Visibility="Collapsed" x:Name="delete_menu_area">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Style="{StaticResource ModernCheckBox}" Width="50" Height="50" x:Name="delete_total_toggle" Content="PC"  Checked="delete_total_click" IsChecked="False" Unchecked="delete_total_click"
-                  Tag="Images/pc.png"
-                  Margin="0,0,20,0"/>
+                    <!--<CheckBox Style="{StaticResource ModernCheckBox}" Width="50" Height="50" x:Name="delete_total_toggle"   Checked="delete_total_click" IsChecked="False" Unchecked="delete_total_click"
+                  
+                  Margin="0,0,20,0"/>-->
 
-                    
+
+
+
+                    <ToggleButton Width="40" Height="40" HorizontalAlignment="Left" Margin="10,0,0,0"  x:Name="delete_total_toggle"   Checked="delete_total_click" IsChecked="False" Unchecked="delete_total_click">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Image Source="Images/blank.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Image Source="Images/x.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+
+
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Right"  x:Name="editpanel"  Visibility="Visible" Margin="0,0,30,0">
                     <Button Width="80" 

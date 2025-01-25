@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              FontFamily="/Wpf.FontTest;component/fonts/#Donoun"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="1280" Background="White">
+             d:DesignHeight="60" d:DesignWidth="1250" Background="White">
    <UserControl.Resources>
 
         <Style x:Key="CustomSeparatorStyle" TargetType="{x:Type Separator}">
@@ -59,7 +59,7 @@
 </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="#888888" CornerRadius="5">
         <Grid>
-            <Grid x:Name="MainGrid" Width="1280" Height="60">
+            <Grid x:Name="MainGrid" Width="1250" Height="60">
                     <!--<Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="80"/>
@@ -173,8 +173,8 @@
                     </Grid>
                 </Grid>
                 <Grid x:Name="delete_select" Visibility="Collapsed" Width="50" HorizontalAlignment="Left">
-                
-                <ToggleButton Width="40" Height="40" x:Name="d_select" HorizontalAlignment="Left" Margin="10,0,0,0">
+
+                <ToggleButton Width="40" Height="40" x:Name="d_select" HorizontalAlignment="Left" Margin="10,0,0,0" Unchecked="d_select_unchecked">
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Setter Property="Background" Value="Transparent"/>
