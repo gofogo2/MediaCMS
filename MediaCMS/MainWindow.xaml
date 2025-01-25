@@ -373,7 +373,7 @@
             <!-- 필터 체크박스 영역 -->
             <Grid Margin="30,20,30,20">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Style="{StaticResource ModernCheckBox}" 
+                    <CheckBox Style="{StaticResource ModernCheckBox}" Checked="category_pc_check" Unchecked="category_pc_check" x:Name="category_pc"
                   Content="PC" 
                               IsChecked="True"
                   Tag="Images/pc.png"

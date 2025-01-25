@@ -1249,7 +1249,7 @@ namespace MediaCMS
 
         public void SaveItemConfigurations()
         {
-            List<ItemConfiguration> configurations = dragItems.Select(item => item.Configuration).ToList();
+            List<ItemConfiguration> configurations = MyItems.Select(item => item.Configuration).ToList();
             string jsonString = JsonConvert.SerializeObject(configurations, Formatting.Indented);
             File.WriteAllText(ConfigFile, jsonString);
         }
@@ -1365,6 +1365,8 @@ namespace MediaCMS
         }
 
 
+        
+
 
         private void add_devi(object sender, RoutedEventArgs e)
         {
@@ -1458,6 +1460,52 @@ namespace MediaCMS
             }
         }
 
+        private void category_pc_check(object sender, RoutedEventArgs e)
+        {
+            if (MyItems != null)
+            {
+
+                if (category_pc.IsChecked == true)
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "pc")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Visible;
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (MyItems.Count != 0)
+                    {
+                        for (int i = MyItems.Count - 1; i >= 0; i--)
+                        {
+                            if (MyItems[i].Configuration.DeviceType.ToLower() == "pc")
+                            {
+                                //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                                MyItems[i].d_select.IsChecked = false;
+                                MyItems[i].Visibility = Visibility.Collapsed;
+
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            
+        }
+
+
+
+
         private void item_delete(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(
@@ -1477,6 +1525,17 @@ namespace MediaCMS
                         dragItems.RemoveAt(i);
                     }
                 }
+
+                for (int i = MyItems.Count - 1; i >= 0; i--)
+                {
+                    if (MyItems[i].d_select.IsChecked == true)
+                    {
+                        //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                        MyItems.RemoveAt(i);
+                    }
+                }
+
+
 
                 SaveItemConfigurations();
 
