@@ -548,7 +548,7 @@ namespace MediaCMS
 
         private void d_select_unchecked(object sender, RoutedEventArgs e)
         {
-            var mainWindow = Window.GetWindow(this) as MainWindow;
+            var mainWindow = Application.Current.MainWindow as MainWindow;
 
             mainWindow.temp_total_stop = true;
 

@@ -52,7 +52,7 @@ namespace MediaCMS
 
         public LogViewerWindow logViewer;
         public LogViewerWindow errorlogViewer;
-        private List<DraggableItemControl> dragItems = new List<DraggableItemControl>();
+        //private List<DraggableItemControl> dragItems = new List<DraggableItemControl>();
         private const string SettingsFile = "settings.json";
         private Point offset;
         private DraggableItemControl draggedItem;
@@ -284,9 +284,9 @@ namespace MediaCMS
                 AutoPowerSettingsControl.cancle_ev();
 
                 editpanel.Visibility = Visibility.Collapsed;
-                for (int i = 0; i < dragItems.Count; i++)
+                for (int i = 0; i < MyItems.Count; i++)
                 {
-                    dragItems[i].delete_select.Visibility = Visibility.Collapsed;
+                    MyItems[i].delete_select.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -508,7 +508,7 @@ namespace MediaCMS
                         //if 꺼져있다면
                         int half_count = 0;
 
-                        foreach (var item in dragItems)
+                        foreach (var item in MyItems)
                         {
                             if (item.Configuration.IsOn == false)
                             {
@@ -516,7 +516,7 @@ namespace MediaCMS
                             }
                         }
 
-                        int majority = dragItems.Count / 2;
+                        int majority = MyItems.Count / 2;
 
                         if (half_count > majority)
                         {
@@ -546,7 +546,7 @@ namespace MediaCMS
 
                         int half_count = 0;
 
-                        foreach (var item in dragItems)
+                        foreach (var item in MyItems)
                         {
                             if (item.Configuration.IsOn == true)
                             {
@@ -554,7 +554,7 @@ namespace MediaCMS
                             }
                         }
 
-                        int majority = dragItems.Count / 2;
+                        int majority = MyItems.Count / 2;
 
                         if (half_count > majority)
                         {
@@ -601,14 +601,14 @@ namespace MediaCMS
             //============== 추가==============
             if (state == false)
             {
-                foreach (var item in dragItems)
+                foreach (var item in MyItems)
                 {
                     item.Configuration.IsCurrentState = state;
                 }
             }
             else
             {
-                foreach (var item in dragItems)
+                foreach (var item in MyItems)
                 {
                     if (item.Configuration.IsPower == true)
                         item.Configuration.IsCurrentState = state;
@@ -741,7 +741,7 @@ namespace MediaCMS
                 previousDeviceType = item.DeviceType;
             }
 
-            foreach (var i in dragItems)
+            foreach (var i in MyItems)
             {
                 i.StartPingCheck();
             }
@@ -826,7 +826,7 @@ namespace MediaCMS
 
         private async Task ProcessDevicesAsync(bool turnOn)
         {
-            var items = dragItems.Select(a => a.Configuration).ToList();
+            var items = MyItems.Select(a => a.Configuration).ToList();
             await SortAndProcessDragItems(items, turnOn, 0, 100);
         }
 
@@ -834,7 +834,7 @@ namespace MediaCMS
         {
             try
             {
-                foreach (var ditem in dragItems)
+                foreach (var ditem in MyItems)
                 {
                     if (ditem.Configuration.IpAddress == item.IpAddress)
                     {
@@ -862,7 +862,7 @@ namespace MediaCMS
         {
             try
             {
-                foreach (var ditem in dragItems)
+                foreach (var ditem in MyItems)
                 {
                     if (ditem.Configuration.IpAddress == item.IpAddress)
                     {
@@ -1052,7 +1052,7 @@ namespace MediaCMS
             highestZIndex = Math.Max(highestZIndex, config.ZIndex);
 
             //ItemCanvas.Children.Add(itemControl);  //기존 영역
-            dragItems.Add(itemControl);
+            //dragItems.Add(itemControl);
 
           
 
@@ -1295,7 +1295,9 @@ namespace MediaCMS
             if (File.Exists(ConfigFile))
             {
                 //ItemCanvas.Children.Clear();  //기존 영역
-                dragItems.Clear();
+                //dragItems.Clear();
+                MyItems.Clear();
+
                 string jsonString = File.ReadAllText(ConfigFile);
                 List<ItemConfiguration> configurations = JsonConvert.DeserializeObject<List<ItemConfiguration>>(jsonString);
 
@@ -1335,7 +1337,7 @@ namespace MediaCMS
             PowerOverlay.Visibility = Visibility.Collapsed;
 
             bool newState = isOn;
-            foreach (var item in dragItems)
+            foreach (var item in MyItems)
             {
                 item.Configuration.IsOn = newState;
                 UpdateItemPowerState(item, newState);
@@ -1388,9 +1390,9 @@ namespace MediaCMS
         private void del_devi(object sender, RoutedEventArgs e)
         {
             editpanel.Visibility = Visibility.Visible;
-            for (int i = 0; i < dragItems.Count; i++)
+            for (int i = 0; i < MyItems.Count; i++)
             {
-                dragItems[i].delete_select.Visibility = Visibility.Visible;
+                MyItems[i].delete_select.Visibility = Visibility.Visible;
             }
         }
 
@@ -1685,14 +1687,14 @@ namespace MediaCMS
 
             if (result == MessageBoxResult.Yes)
             {
-                for (int i = dragItems.Count - 1; i >= 0; i--)
-                {
-                    if (dragItems[i].d_select.IsChecked == true)
-                    {
-                        //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
-                        dragItems.RemoveAt(i);
-                    }
-                }
+                //for (int i = dragItems.Count - 1; i >= 0; i--)
+                //{
+                //    if (dragItems[i].d_select.IsChecked == true)
+                //    {
+                //        //ItemCanvas.Children.Remove(dragItems[i]); //기존 영역
+                //        dragItems.RemoveAt(i);
+                //    }
+                //}
 
                 for (int i = MyItems.Count - 1; i >= 0; i--)
                 {
@@ -1804,7 +1806,8 @@ namespace MediaCMS
         public void RemoveDevice(DraggableItemControl deviceControl)
         {
             //ItemCanvas.Children.Remove(deviceControl); //기존 영역
-            dragItems.Remove(deviceControl);
+            //dragItems.Remove(deviceControl);
+            MyItems.Remove(deviceControl);
             SaveItemConfigurations();
 
             //여기
