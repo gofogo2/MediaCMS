@@ -1448,10 +1448,6 @@ namespace MediaCMS
                 MyItems[i].delete_select.Visibility = Visibility.Collapsed;
                 MyItems[i].d_select.IsChecked = false;
             }
-
-
-
-
         }
 
 
@@ -1479,7 +1475,7 @@ namespace MediaCMS
             editpanel.Visibility = Visibility.Visible;
             delete_menu_area.Visibility = Visibility.Visible;
             for (int i = 0; i < MyItems.Count; i++)
-            {
+            { 
                 MyItems[i].delete_select.Visibility = Visibility.Visible;
             }
         }
